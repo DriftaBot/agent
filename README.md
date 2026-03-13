@@ -28,7 +28,6 @@ jobs:
       - uses: DriftAgent/api-drift-agent@v1
         with:
           org-read-token: ${{ secrets.ORG_READ_TOKEN }}
-          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}  # optional
 ```
 
 ## How it works
@@ -48,7 +47,6 @@ Powered by [drift-guard-engine](https://pgomes13.github.io/drift-guard-engine/).
 | `base-schema` | No | Path to OpenAPI schema (auto-detected if omitted) |
 | `head-schema` | No | Path on PR branch (defaults to `base-schema`) |
 | `org-read-token` | No | PAT with `repo:read` + `read:org` for private repos |
-| `anthropic-api-key` | No | Enables LLM-powered impact explanations in Issues |
 
 ## Python CLI
 
