@@ -8,11 +8,15 @@ branding:
 
 inputs:
   base-schema:
-    description: 'Path to OpenAPI schema file (relative to repo root). Auto-detected if omitted.'
+    description: 'Path to schema file (relative to repo root). Auto-detected if omitted. Supports OpenAPI (.yaml/.yml/.json), GraphQL (.graphql/.gql), and Protobuf (.proto).'
     required: false
     default: ''
   head-schema:
-    description: 'Path to OpenAPI schema on the PR branch. Defaults to base-schema value.'
+    description: 'Path to schema on the PR branch. Defaults to base-schema value.'
+    required: false
+    default: ''
+  generate-schema-cmd:
+    description: 'Optional shell command to generate the schema file before diffing (e.g. "npm run build && node scripts/gen-swagger.js"). Runs on the PR branch only.'
     required: false
     default: ''
   org-read-token:
@@ -45,45 +49,82 @@ runs:
       shell: bash
       run: pip install --quiet "$GITHUB_ACTION_PATH"
 
-    - name: Detect schema path
+    - name: Generate schema (if configured)
+      if: inputs.generate-schema-cmd != ''
+      shell: bash
+      run: |
+        echo "[drift-agent] running generate-schema-cmd: ${{ inputs.generate-schema-cmd }}"
+        ${{ inputs.generate-schema-cmd }}
+
+    - name: Detect schema path and type
       id: schema
       shell: bash
       run: |
         BASE="${{ inputs.base-schema }}"
         HEAD="${{ inputs.head-schema }}"
+
         if [ -z "$BASE" ]; then
+          # OpenAPI
           BASE=$(find . -maxdepth 4 \( \
             -name "openapi.yaml" -o -name "openapi.yml" -o -name "openapi.json" \
             -o -name "api.yaml" -o -name "api.yml" -o -name "api.json" \
             -o -name "swagger.yaml" -o -name "swagger.yml" -o -name "swagger.json" \) \
             ! -path "*/node_modules/*" ! -path "*/.git/*" | head -1)
         fi
+
         if [ -z "$BASE" ]; then
-          echo "::error::No OpenAPI schema found. Set base-schema input or add openapi.yaml to the repo root."
+          # GraphQL
+          BASE=$(find . -maxdepth 4 \( -name "*.graphql" -o -name "*.gql" \) \
+            ! -path "*/node_modules/*" ! -path "*/.git/*" | head -1)
+        fi
+
+        if [ -z "$BASE" ]; then
+          # Protobuf
+          BASE=$(find . -maxdepth 4 -name "*.proto" \
+            ! -path "*/node_modules/*" ! -path "*/.git/*" | head -1)
+        fi
+
+        if [ -z "$BASE" ]; then
+          echo "::error::No API schema found. Set base-schema input or commit an openapi.yaml, *.graphql, or *.proto file."
           exit 1
         fi
+
+        # Detect schema type from extension
+        case "$BASE" in
+          *.graphql|*.gql) TYPE="graphql" ;;
+          *.proto)         TYPE="grpc" ;;
+          *)               TYPE="openapi" ;;
+        esac
+
         [ -z "$HEAD" ] && HEAD="$BASE"
         echo "base=$BASE" >> $GITHUB_OUTPUT
         echo "head=$HEAD" >> $GITHUB_OUTPUT
-        echo "[drift-agent] schema: $BASE"
+        echo "type=$TYPE" >> $GITHUB_OUTPUT
+        echo "[drift-agent] schema: $BASE (type: $TYPE)"
 
     - name: Compare schemas
       id: diff
       shell: bash
       run: |
-        git show "origin/${{ github.base_ref }}":"${{ steps.schema.outputs.base }}" \
-          > /tmp/drift-base-schema.yaml 2>/dev/null || {
+        BASE_PATH="${{ steps.schema.outputs.base }}"
+        HEAD_PATH="${{ steps.schema.outputs.head }}"
+        TYPE="${{ steps.schema.outputs.type }}"
+
+        git show "origin/${{ github.base_ref }}":"${BASE_PATH}" \
+          > /tmp/drift-base-schema 2>/dev/null || {
           echo "::warning::Could not read base schema from ${{ github.base_ref }}. Skipping drift check."
           echo "breaking=0" >> $GITHUB_OUTPUT
           exit 0
         }
-        if ! drift-guard openapi \
-          --base /tmp/drift-base-schema.yaml \
-          --head "${{ steps.schema.outputs.head }}" \
+
+        if ! drift-guard "$TYPE" \
+          --base /tmp/drift-base-schema \
+          --head "${HEAD_PATH}" \
           --format json > /tmp/drift-diff.json; then
-          echo "::error::drift-guard-engine failed to diff schemas. Check that both schema files are valid OpenAPI."
+          echo "::error::drift-guard-engine failed to diff schemas. Check that both schema files are valid $TYPE."
           exit 1
         fi
+
         BREAKING=$(python3 -c \
           "import json,sys; d=json.load(open('/tmp/drift-diff.json')); print(d.get('summary',{}).get('breaking',0))" \
           2>/dev/null || echo "0")
