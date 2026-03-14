@@ -73,11 +73,11 @@ def _build_comment(issue_urls: dict[str, str], breaking: list, provider_repo: st
         "",
         "### Breaking changes",
         "",
-        "| Method | Path | Description |",
-        "| ------ | ---- | ----------- |",
+        "| Path | Description |",
+        "| ---- | ----------- |",
     ]
     for c in breaking:
-        lines.append(f"| `{c.method or '*'}` | `{c.path}` | {c.description} |")
+        lines.append(f"| `{c.path}` | {c.description} |")
 
     lines += [
         "",
@@ -85,12 +85,11 @@ def _build_comment(issue_urls: dict[str, str], breaking: list, provider_repo: st
         "",
         f"Issues have been opened in **{n}** affected consumer {noun}:",
         "",
-        "| Consumer | Issue |",
-        "| -------- | ----- |",
+        "| Issue |",
+        "| ----- |",
     ]
     for repo, url in sorted(issue_urls.items()):
-        repo_url = f"https://github.com/{repo}"
-        lines.append(f"| [{repo}]({repo_url}) | {url} |")
+        lines.append(f"| {url} |")
 
     lines += [
         "",
