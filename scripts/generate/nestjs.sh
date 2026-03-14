@@ -46,11 +46,11 @@ typeorm.DataSource.prototype.destroy = async function () { return; };
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as fs from 'fs';
-import * as path from 'path';
 
 const OUTPUT = process.env.DRIFT_OUTPUT!;
 
 async function generate() {
+  // Use require() with relative paths so ts-node resolves .ts extension correctly
   const candidates = [
     './src/app.module',
     './src/app/app.module',
@@ -61,7 +61,8 @@ async function generate() {
   let AppModule: any;
   for (const p of candidates) {
     try {
-      const mod = await import(path.resolve(p));
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const mod = require(p);
       AppModule = mod.AppModule ?? mod.default?.AppModule;
       if (AppModule) {
         console.log(`[drift-agent] loaded AppModule from ${p}`);
