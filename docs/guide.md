@@ -37,6 +37,7 @@ on:
   pull_request:
 
 permissions:
+  pull-requests: write
   contents: read
   issues: write
 
@@ -54,7 +55,6 @@ jobs:
           consumer-repos: |
             your-org/service-a
             your-org/service-b
-          # anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
 ```
 
 Replace `your-org/service-a` etc. with the repos that consume your API.

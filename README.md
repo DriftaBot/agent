@@ -15,6 +15,7 @@ on:
   pull_request:
 
 permissions:
+  pull-requests: write
   contents: read
   issues: write
 
