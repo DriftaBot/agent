@@ -77,7 +77,7 @@ def _build_comment(issue_urls: dict[str, str], breaking: list, provider_repo: st
         "| ------ | ---- | ----------- |",
     ]
     for c in breaking:
-        lines.append(f"| `{c.method}` | `{c.path}` | {c.description} |")
+        lines.append(f"| `{c.method or '*'}` | `{c.path}` | {c.description} |")
 
     lines += [
         "",
