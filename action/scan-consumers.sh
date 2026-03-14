@@ -7,6 +7,10 @@ set -euo pipefail
 # GITHUB_TOKEN is scoped to the provider repo only and cannot open issues in consumer repos.
 ISSUE_TOKEN="${ORG_READ_TOKEN:-$GITHUB_TOKEN}"
 
+if [ "$ISSUE_TOKEN" = "$GITHUB_TOKEN" ]; then
+  echo "::warning::drift-guard-agent: no org-read-token provided — using GITHUB_TOKEN which cannot open issues in consumer repos. Set org-read-token to a PAT with 'repo' (or 'public_repo') + 'read:org' scopes."
+fi
+
 drift-guard-agent \
   --diff /tmp/drift-diff.json \
   --org "$GITHUB_REPOSITORY_OWNER" \

@@ -16,7 +16,7 @@ inputs:
     required: false
     default: ''
   org-read-token:
-    description: 'GitHub PAT with repo:read + read:org scopes. Used to search and clone private consumer repos. Falls back to GITHUB_TOKEN (public repos only).'
+    description: 'GitHub PAT with repo (or public_repo) + read:org scopes. Required to search, clone, and open issues in consumer repos. Falls back to GITHUB_TOKEN (cannot open issues in other repos).'
     required: false
     default: ''
   anthropic-api-key:
