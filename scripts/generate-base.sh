@@ -76,6 +76,10 @@ cp -r "$SCRIPTS_DIR/generate/." "$WORKTREE/.drift-scripts/generate/"
 chmod +x "$WORKTREE/.drift-scripts/generate/"*.sh
 
 # Run the appropriate generator inside the worktree
+case "$TYPE" in
+  nestjs|fastapi|go) ;;
+  *) echo "::error::Unknown code-first project type: $TYPE"; exit 1 ;;
+esac
 (cd "$WORKTREE" && bash ".drift-scripts/generate/${TYPE}.sh" "$OUTPUT") || {
   echo "::error::Base schema generation failed in worktree for $TYPE" >&2
   git worktree remove "$WORKTREE" --force 2>/dev/null || true

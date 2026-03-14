@@ -12,5 +12,10 @@ elif [ -n "${OVERRIDE_BASE:-}" ]; then
   cp "$OVERRIDE_BASE" /tmp/specs/head.yml
   echo "[drift-agent] head schema: override $OVERRIDE_BASE"
 else
-  bash /tmp/scripts/generate/${TYPE}.sh /tmp/specs/head.yml
+  case "$TYPE" in
+    nestjs|fastapi|go|graphql|grpc|openapi)
+      bash /tmp/scripts/generate/${TYPE}.sh /tmp/specs/head.yml ;;
+    *)
+      echo "::error::Unknown project type: $TYPE"; exit 1 ;;
+  esac
 fi

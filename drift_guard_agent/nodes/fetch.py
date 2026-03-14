@@ -17,7 +17,7 @@ def fetch_consumers(state: DriftState) -> dict:
     if not consumers:
         return {}
 
-    _WORKDIR.mkdir(parents=True, exist_ok=True)
+    _WORKDIR.mkdir(parents=True, exist_ok=True, mode=0o700)
     updated: list[ConsumerRepo] = []
 
     for consumer in consumers:
