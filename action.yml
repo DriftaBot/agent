@@ -52,9 +52,10 @@ runs:
         BASE="${{ inputs.base-schema }}"
         HEAD="${{ inputs.head-schema }}"
         if [ -z "$BASE" ]; then
-          BASE=$(find . -maxdepth 4 \( -name "openapi.yaml" -o -name "openapi.yml" \
-            -o -name "api.yaml" -o -name "api.yml" \
-            -o -name "swagger.yaml" -o -name "swagger.yml" \) \
+          BASE=$(find . -maxdepth 4 \( \
+            -name "openapi.yaml" -o -name "openapi.yml" -o -name "openapi.json" \
+            -o -name "api.yaml" -o -name "api.yml" -o -name "api.json" \
+            -o -name "swagger.yaml" -o -name "swagger.yml" -o -name "swagger.json" \) \
             ! -path "*/node_modules/*" ! -path "*/.git/*" | head -1)
         fi
         if [ -z "$BASE" ]; then
