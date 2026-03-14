@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: API DriftaBot
+  name: DriftaBot Agent
   tagline: Detect breaking API changes in provider PRs. Automatically open GitHub Issues in affected consumer repos.
   actions:
     - theme: brand

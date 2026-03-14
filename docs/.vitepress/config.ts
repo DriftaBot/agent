@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: 'API DriftaBot',
+  title: 'DriftaBot Agent',
   description: 'Detect breaking API changes in provider PRs and automatically open GitHub Issues in affected consumer repos.',
   base: '/agent/',
 
