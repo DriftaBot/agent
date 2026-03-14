@@ -40,23 +40,3 @@ Powered by [drift-guard-engine](https://pgomes13.github.io/drift-guard-engine/).
 4. Clones each consumer repo and scans for affected files
 5. Opens (or updates) a GitHub Issue in each impacted consumer repo
 
-## Inputs
-
-| Input | Required | Description |
-|---|---|---|
-| `base-schema` | No | Path to OpenAPI schema (auto-detected if omitted) |
-| `head-schema` | No | Path on PR branch (defaults to `base-schema`) |
-| `org-read-token` | No | PAT with `repo:read` + `read:org` for private repos |
-
-## Python CLI
-
-```sh
-pip install drift-guard-agent
-
-drift-guard-agent \
-  --diff diff.json \
-  --org my-org \
-  --token $ORG_READ_TOKEN \
-  --github-token $GITHUB_TOKEN \
-  --pr 42
-```
