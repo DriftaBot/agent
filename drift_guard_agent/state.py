@@ -60,6 +60,7 @@ class DriftState(TypedDict):
     provider_repo: str   # full name of the provider repo, excluded from search
     model: str
     dry_run: bool
+    consumer_repos: List[str]  # explicit list of owner/repo to scan (skips org search)
 
     # Pipeline state
     consumers: List[ConsumerRepo]
@@ -81,6 +82,7 @@ def initial_state(**kwargs) -> DriftState:
         "provider_repo": "",
         "model": "claude-opus-4-6",
         "dry_run": False,
+        "consumer_repos": [],
         "consumers": [],
         "hits": {},
         "explanations": {},

@@ -11,10 +11,16 @@ if [ "$ISSUE_TOKEN" = "$GITHUB_TOKEN" ]; then
   echo "::warning::drift-guard-agent: no org-read-token provided — using GITHUB_TOKEN which cannot open issues in consumer repos. Set org-read-token to a PAT with 'repo' (or 'public_repo') + 'read:org' scopes."
 fi
 
+EXTRA_ARGS=""
+if [ -n "${CONSUMER_REPOS:-}" ]; then
+  EXTRA_ARGS="--consumer-repos $CONSUMER_REPOS"
+fi
+
 drift-guard-agent \
   --diff /tmp/drift-diff.json \
   --org "$GITHUB_REPOSITORY_OWNER" \
   --token "$ORG_READ_TOKEN" \
   --github-token "$ISSUE_TOKEN" \
   --provider-repo "$GITHUB_REPOSITORY" \
-  --pr "$PR_NUMBER"
+  --pr "$PR_NUMBER" \
+  $EXTRA_ARGS

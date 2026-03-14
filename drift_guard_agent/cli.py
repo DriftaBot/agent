@@ -29,6 +29,8 @@ from drift_guard_agent.state import initial_state
               help="Full name of the provider repo (e.g. org/repo) — excluded from consumer search.")
 @click.option("--model", default="claude-opus-4-6", show_default=True, envvar="DRIFT_GUARD_MODEL",
               help="Anthropic model to use for analysis (requires ANTHROPIC_API_KEY).")
+@click.option("--consumer-repos", default="", envvar="CONSUMER_REPOS",
+              help="Comma-separated list of owner/repo to scan instead of searching the whole org.")
 @click.option("--dry-run", is_flag=True, default=False,
               help="Print output without posting to GitHub.")
 def main(
@@ -39,6 +41,7 @@ def main(
     pr_number: int,
     provider_repo: str,
     model: str,
+    consumer_repos: str,
     dry_run: bool,
 ):
     """Scan consumer repos for impact when a provider PR has breaking API changes.
@@ -65,7 +68,11 @@ def main(
         click.echo("No breaking changes — nothing to do.")
         return
 
-    click.echo(f"[drift-guard-agent] {len(breaking)} breaking change(s) detected. Scanning org '{org}' for impacted consumers...")
+    repos_list = [r.strip() for r in consumer_repos.replace(",", "\n").splitlines() if r.strip()]
+    if repos_list:
+        click.echo(f"[drift-guard-agent] {len(breaking)} breaking change(s) detected. Scanning {len(repos_list)} explicit consumer repo(s)...")
+    else:
+        click.echo(f"[drift-guard-agent] {len(breaking)} breaking change(s) detected. Scanning org '{org}' for impacted consumers...")
 
     # Fall back to GITHUB_TOKEN for consumer operations if no dedicated PAT
     if not token:
@@ -82,6 +89,7 @@ def main(
         pr_number=pr_number,
         provider_repo=provider_repo,
         model=model,
+        consumer_repos=repos_list,
         dry_run=dry_run,
     )
 

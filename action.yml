@@ -23,6 +23,10 @@ inputs:
     description: 'Anthropic API key. Enables Claude-powered risk analysis in opened issues.'
     required: false
     default: ''
+  consumer-repos:
+    description: 'Newline or comma-separated list of consumer repos to scan (e.g. org/repo). When set, skips org-wide code search and scans only these repos.'
+    required: false
+    default: ''
 
 runs:
   using: composite
@@ -85,6 +89,7 @@ runs:
         GITHUB_TOKEN: ${{ github.token }}
         ORG_READ_TOKEN: ${{ inputs.org-read-token != '' && inputs.org-read-token || github.token }}
         ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}
+        CONSUMER_REPOS: ${{ inputs.consumer-repos }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
       run: bash "$GITHUB_ACTION_PATH/action/scan-consumers.sh"
 

@@ -23,6 +23,20 @@ def discover_consumers(state: DriftState) -> dict:
     provider_repo = state.get("provider_repo", "")
     diff = state["diff"]
 
+    # If an explicit list was provided, skip org-wide search entirely
+    explicit = [r.strip() for r in state.get("consumer_repos", []) if r.strip()]
+    if explicit:
+        consumers = [
+            ConsumerRepo(
+                full_name=name,
+                clone_url=f"https://x-access-token:{token}@github.com/{name}.git",
+            )
+            for name in explicit
+            if name != provider_repo
+        ]
+        print(f"[discover] Using explicit consumer list ({len(consumers)} repo(s)): {[c.full_name for c in consumers]}")
+        return {"consumers": consumers}
+
     if not token or not org:
         print("[discover] No token/org — skipping consumer discovery")
         return {"consumers": []}
