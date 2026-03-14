@@ -54,7 +54,7 @@ def _build_comment(issue_urls: dict[str, str], breaking: list, provider_repo: st
 
     lines = [
         _COMMENT_MARKER,
-        f"## ⚠️ [DriftAgent]({_MARKETPLACE_URL}) Report — {count} breaking change{'s' if count != 1 else ''} detected",
+        f"## ⚠️ API <a href=\"{_MARKETPLACE_URL}\" target=\"_blank\">DriftAgent</a> Report — {count} breaking change{\"s\" if count != 1 else \"\"} detected",
         "",
         "### Breaking changes",
         "",
@@ -79,7 +79,7 @@ def _build_comment(issue_urls: dict[str, str], breaking: list, provider_repo: st
 
     lines += [
         "",
-        f"_Update consumer repos before merging this PR · [DriftAgent]({_MARKETPLACE_URL})_",
+        "_Update consumer repos before merging this PR._",
     ]
     return "\n".join(lines)
 
