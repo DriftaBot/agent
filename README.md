@@ -1,6 +1,7 @@
 # DriftaBot Agent
 
 <a href="https://driftabot.github.io/agent/guide#quick-start" target="_blank"><img src="https://img.shields.io/badge/Quickstart-6366f1?logo=gitbook&logoColor=white" alt="Quickstart"></a>
+<a href="https://github.com/marketplace/actions/driftabot-agent" target="_blank"><img src="https://img.shields.io/badge/GitHub_Marketplace-driftabot--agent-2088FF?logo=github&logoColor=white" alt="GitHub Marketplace"></a>
 
 LangGraph-powered agent that detects breaking API changes in provider PRs and automatically opens GitHub Issues in affected consumer repos — zero config on consumer side.
 
