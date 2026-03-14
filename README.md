@@ -32,7 +32,7 @@ jobs:
 
 ## How it works
 
-Powered by <a href="https://driftagent.github.io/api-drift-engine/" target="_blank">drift-guard-engine</a>.
+Powered by <a href="https://driftagent.github.io/api-drift-engine/" target="_blank">DriftAgent</a>.
 
 1. Downloads the latest `drift-guard-engine` binary
 2. Compares the OpenAPI schema between base and head branch

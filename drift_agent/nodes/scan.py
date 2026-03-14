@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from drift_guard_agent.state import DriftState, Hit
+from drift_agent.state import DriftState, Hit
 
 # File extensions to scan
 _SCAN_EXTENSIONS = {

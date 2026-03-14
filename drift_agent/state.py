@@ -1,4 +1,4 @@
-"""LangGraph state definition for the drift-guard agent."""
+"""LangGraph state definition for the drift-agent."""
 
 from __future__ import annotations
 

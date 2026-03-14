@@ -1,16 +1,16 @@
-"""Tests for drift_guard_agent.graph routing functions."""
+"""Tests for drift_agent.graph routing functions."""
 
 from __future__ import annotations
 
 import pytest
 from langgraph.graph import END
 
-from drift_guard_agent.graph import (
+from drift_agent.graph import (
     _route_after_discover,
     _route_after_ingest,
     _route_after_scan,
 )
-from drift_guard_agent.state import Change, ConsumerRepo, DiffResult, Hit, initial_state
+from drift_agent.state import Change, ConsumerRepo, DiffResult, Hit, initial_state
 
 
 def _breaking():

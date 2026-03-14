@@ -1,4 +1,4 @@
-"""LangGraph graph definition for drift-guard-agent."""
+"""LangGraph graph definition for drift-agent."""
 
 from __future__ import annotations
 
@@ -8,14 +8,14 @@ from typing import Literal
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, StateGraph
 
-from drift_guard_agent.nodes.discover import discover_consumers
-from drift_guard_agent.nodes.explain import explain
-from drift_guard_agent.nodes.fetch import fetch_consumers
-from drift_guard_agent.nodes.ingest import ingest
-from drift_guard_agent.nodes.notify import notify
-from drift_guard_agent.nodes.pr_comment import pr_comment
-from drift_guard_agent.nodes.scan import scan_consumers
-from drift_guard_agent.state import DriftState
+from drift_agent.nodes.discover import discover_consumers
+from drift_agent.nodes.explain import explain
+from drift_agent.nodes.fetch import fetch_consumers
+from drift_agent.nodes.ingest import ingest
+from drift_agent.nodes.notify import notify
+from drift_agent.nodes.pr_comment import pr_comment
+from drift_agent.nodes.scan import scan_consumers
+from drift_agent.state import DriftState
 
 
 def _route_after_ingest(state: DriftState) -> Literal["discover_consumers", "__end__"]:

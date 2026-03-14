@@ -1,11 +1,11 @@
-"""Tests for drift_guard_agent.nodes.discover."""
+"""Tests for drift_agent.nodes.discover."""
 
 from __future__ import annotations
 
 import pytest
 
-from drift_guard_agent.nodes.discover import discover_consumers
-from drift_guard_agent.state import ConsumerRepo, initial_state
+from drift_agent.nodes.discover import discover_consumers
+from drift_agent.state import ConsumerRepo, initial_state
 
 
 class TestDiscoverConsumers:

@@ -6,7 +6,7 @@ import os
 
 import httpx
 
-from drift_guard_agent.state import DriftState
+from drift_agent.state import DriftState
 
 _GITHUB_API = "https://api.github.com"
 _ISSUE_LABEL = "drift-guard"
@@ -112,7 +112,7 @@ def _build_issue_body(
         "**Action required:** Update these references before the provider PR is merged.",
         "",
         "---",
-        f"_Opened by [drift-guard](https://github.com/DriftAgent/api-drift-engine) · {pr_link}_",
+        f"_Opened by [Drift Agent](https://github.com/DriftAgent/api-drift-agent) · {pr_link}_",
     ]
     return "\n".join(lines)
 
@@ -124,7 +124,7 @@ def _upsert_issue(
     provider_repo: str,
     pr_number: int,
 ) -> str | None:
-    """Create or update a drift-guard issue in repo. Returns the issue HTML URL or None on failure."""
+    """Create or update a drift-agent issue in repo. Returns the issue HTML URL or None on failure."""
     title = f"⚠️ Breaking API changes from {provider_repo}" + (f" (PR #{pr_number})" if pr_number else "")
 
     # Ensure the label exists
@@ -174,7 +174,7 @@ def _upsert_issue(
 
 
 def _close_stale_issue(client: httpx.Client, repo: str, provider_repo: str):
-    """Close any open drift-guard issue in repo that references provider_repo."""
+    """Close any open drift-agent issue in repo that references provider_repo."""
     try:
         resp = client.get(
             f"{_GITHUB_API}/repos/{repo}/issues",

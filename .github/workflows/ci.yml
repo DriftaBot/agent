@@ -19,7 +19,7 @@ jobs:
         run: pip install -e ".[dev]"
 
       - name: Lint
-        run: ruff check drift_guard_agent/
+        run: ruff check drift_agent/
 
       - name: Smoke test
-        run: python -c "from drift_guard_agent.graph import build_graph; build_graph(); print('Graph OK')"
+        run: python -c "from drift_agent.graph import build_graph; build_graph(); print('Graph OK')"

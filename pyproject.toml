@@ -27,7 +27,7 @@ dependencies = [
 dev = ["ruff", "pytest>=8.0", "pytest-httpx>=0.30"]
 
 [project.scripts]
-drift-agent = "drift_guard_agent.cli:main"
+drift-agent = "drift_agent.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/DriftAgent/api-drift-agent"
@@ -35,7 +35,7 @@ Repository = "https://github.com/DriftAgent/api-drift-agent"
 Issues = "https://github.com/DriftAgent/api-drift-agent/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["drift_guard_agent"]
+packages = ["drift_agent"]
 
 [tool.ruff]
 line-length = 100

@@ -1,4 +1,4 @@
-"""Tests for drift_guard_agent.nodes.ingest."""
+"""Tests for drift_agent.nodes.ingest."""
 
 from __future__ import annotations
 
@@ -6,8 +6,8 @@ import json
 
 import pytest
 
-from drift_guard_agent.nodes.ingest import ingest, parse_diff_json
-from drift_guard_agent.state import Change, DiffResult, initial_state
+from drift_agent.nodes.ingest import ingest, parse_diff_json
+from drift_agent.state import Change, DiffResult, initial_state
 
 
 # ── ingest() ────────────────────────────────────────────────────────────────

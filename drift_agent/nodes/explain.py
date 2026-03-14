@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 import os
 
-from drift_guard_agent.state import DriftState
+from drift_agent.state import DriftState
 
 
 def explain(state: DriftState) -> dict:
@@ -59,7 +59,7 @@ Respond as a JSON array of strings, one per affected breaking change (same order
                 messages=[{"role": "user", "content": prompt}],
             )
         except Exception as e:
-            print(f"::warning::drift-guard-agent: explain step skipped for {repo} — {e}")
+            print(f"::warning::drift-agent: explain step skipped for {repo} — {e}")
             continue
 
         text = next((b.text for b in response.content if b.type == "text"), "[]").strip()

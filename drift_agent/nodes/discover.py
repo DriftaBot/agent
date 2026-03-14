@@ -8,7 +8,7 @@ from __future__ import annotations
 import os
 import re
 
-from drift_guard_agent.state import ConsumerRepo, DriftState
+from drift_agent.state import ConsumerRepo, DriftState
 
 _REPO_RE = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_.-]*/[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
 _GITHUB_URL_RE = re.compile(r'^https?://github\.com/([^/]+/[^/]+?)(?:\.git)?$')

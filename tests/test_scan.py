@@ -1,4 +1,4 @@
-"""Tests for drift_guard_agent.nodes.scan."""
+"""Tests for drift_agent.nodes.scan."""
 
 from __future__ import annotations
 
@@ -6,13 +6,13 @@ from pathlib import Path
 
 import pytest
 
-from drift_guard_agent.nodes.scan import (
+from drift_agent.nodes.scan import (
     _build_patterns,
     _scan_dir,
     _walk,
     scan_consumers,
 )
-from drift_guard_agent.state import Change, ConsumerRepo, DiffResult, Hit, initial_state
+from drift_agent.state import Change, ConsumerRepo, DiffResult, Hit, initial_state
 
 
 def _change(path="/users/{id}", method="GET", severity="breaking", description="removed"):

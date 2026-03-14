@@ -1,4 +1,4 @@
-"""Tests for drift_guard_agent.nodes.notify."""
+"""Tests for drift_agent.nodes.notify."""
 
 from __future__ import annotations
 
@@ -7,13 +7,13 @@ from unittest.mock import MagicMock, patch
 import httpx
 import pytest
 
-from drift_guard_agent.nodes.notify import (
+from drift_agent.nodes.notify import (
     _build_issue_body,
     _close_stale_issue,
     _upsert_issue,
     notify,
 )
-from drift_guard_agent.state import Change, ConsumerRepo, DiffResult, Hit, initial_state
+from drift_agent.state import Change, ConsumerRepo, DiffResult, Hit, initial_state
 
 
 def _change(path="/users/{id}", method="GET", description="endpoint removed"):
@@ -299,7 +299,7 @@ class TestNotify:
         assert result["consumer_issues"] == {}
         assert result["issue_urls"] == {}
 
-    @patch("drift_guard_agent.nodes.notify.httpx.Client")
+    @patch("drift_agent.nodes.notify.httpx.Client")
     def test_creates_issue_for_each_repo_with_hits(self, mock_client_cls):
         mock_client = _mock_client(
             get_json=[],
@@ -313,7 +313,7 @@ class TestNotify:
         assert "org/service" in result["issue_urls"]
         assert result["issue_urls"]["org/service"] == "https://github.com/org/service/issues/1"
 
-    @patch("drift_guard_agent.nodes.notify.httpx.Client")
+    @patch("drift_agent.nodes.notify.httpx.Client")
     def test_closes_stale_issues_for_repos_without_hits(self, mock_client_cls):
         mock_client = MagicMock()
 
@@ -340,7 +340,7 @@ class TestNotify:
         # _close_stale_issue should be called for org/no-hits
         mock_client.get.assert_called()
 
-    @patch("drift_guard_agent.nodes.notify.httpx.Client")
+    @patch("drift_agent.nodes.notify.httpx.Client")
     def test_env_github_token_used(self, mock_client_cls, monkeypatch):
         monkeypatch.setenv("GITHUB_TOKEN", "envtok")
         mock_client = _mock_client(

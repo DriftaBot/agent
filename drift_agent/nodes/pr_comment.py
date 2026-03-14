@@ -6,7 +6,7 @@ import os
 
 import httpx
 
-from drift_guard_agent.state import DriftState
+from drift_agent.state import DriftState
 
 _GITHUB_API = "https://api.github.com"
 _COMMENT_MARKER = "<!-- drift-guard-pr-comment -->"
@@ -148,7 +148,7 @@ def _build_clear_comment() -> str:
 
 
 def _find_existing_comment(client: httpx.Client, provider_repo: str, pr_number: int) -> int | None:
-    """Return the comment id of an existing drift-guard PR comment, or None."""
+    """Return the comment id of an existing drift-agent PR comment, or None."""
     try:
         resp = client.get(
             f"{_GITHUB_API}/repos/{provider_repo}/issues/{pr_number}/comments",
@@ -174,13 +174,13 @@ def _upsert_pr_comment(
                 f"{_GITHUB_API}/repos/{provider_repo}/issues/{pr_number}/comments/{existing_id}",
                 json={"body": body},
             ).raise_for_status()
-            print(f"[pr_comment] Updated drift-guard comment on {provider_repo}#{pr_number}")
+            print(f"[pr_comment] Updated drift-agent comment on {provider_repo}#{pr_number}")
         else:
             client.post(
                 f"{_GITHUB_API}/repos/{provider_repo}/issues/{pr_number}/comments",
                 json={"body": body},
             ).raise_for_status()
-            print(f"[pr_comment] Posted drift-guard comment on {provider_repo}#{pr_number}")
+            print(f"[pr_comment] Posted drift-agent comment on {provider_repo}#{pr_number}")
 
     except httpx.HTTPStatusError as e:
         if e.response.status_code == 403:

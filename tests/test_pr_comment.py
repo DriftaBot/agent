@@ -1,4 +1,4 @@
-"""Tests for drift_guard_agent.nodes.pr_comment."""
+"""Tests for drift_agent.nodes.pr_comment."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from unittest.mock import MagicMock, patch
 import httpx
 import pytest
 
-from drift_guard_agent.nodes.pr_comment import (
+from drift_agent.nodes.pr_comment import (
     _COMMENT_MARKER,
     _build_clear_comment,
     _build_comment,
@@ -16,7 +16,7 @@ from drift_guard_agent.nodes.pr_comment import (
     _upsert_pr_comment,
     pr_comment,
 )
-from drift_guard_agent.state import Change, DiffResult, initial_state
+from drift_agent.state import Change, DiffResult, initial_state
 
 
 def _change(path="/users/{id}", description="endpoint removed"):
@@ -285,7 +285,7 @@ class TestPrComment:
     def test_no_token_env_fallback(self, monkeypatch, capsys):
         monkeypatch.setenv("GITHUB_TOKEN", "envtok")
         # Can't easily test full flow without httpx mock, but verify it doesn't hit no-token path
-        with patch("drift_guard_agent.nodes.pr_comment.httpx.Client") as mock_cls:
+        with patch("drift_agent.nodes.pr_comment.httpx.Client") as mock_cls:
             mock_client = MagicMock()
             get_resp = MagicMock()
             get_resp.json.return_value = []
@@ -301,7 +301,7 @@ class TestPrComment:
             pr_comment(state)
             assert "No GITHUB_TOKEN" not in capsys.readouterr().out
 
-    @patch("drift_guard_agent.nodes.pr_comment.httpx.Client")
+    @patch("drift_agent.nodes.pr_comment.httpx.Client")
     def test_posts_new_comment(self, mock_cls):
         mock_client = MagicMock()
         get_resp = MagicMock()
@@ -318,7 +318,7 @@ class TestPrComment:
         pr_comment(state)
         mock_client.post.assert_called_once()
 
-    @patch("drift_guard_agent.nodes.pr_comment.httpx.Client")
+    @patch("drift_agent.nodes.pr_comment.httpx.Client")
     def test_updates_existing_comment(self, mock_cls):
         mock_client = MagicMock()
         get_resp = MagicMock()
@@ -336,7 +336,7 @@ class TestPrComment:
         mock_client.patch.assert_called_once()
         assert "77" in mock_client.patch.call_args[0][0]
 
-    @patch("drift_guard_agent.nodes.pr_comment.httpx.Client")
+    @patch("drift_agent.nodes.pr_comment.httpx.Client")
     def test_no_consumer_repos_posts_not_configured_comment(self, mock_cls):
         mock_client = MagicMock()
         get_resp = MagicMock()
@@ -355,7 +355,7 @@ class TestPrComment:
         body = mock_client.post.call_args[1]["json"]["body"]
         assert "consumer-repos" in body
 
-    @patch("drift_guard_agent.nodes.pr_comment.httpx.Client")
+    @patch("drift_agent.nodes.pr_comment.httpx.Client")
     def test_existing_comment_updated_to_clear_when_no_issues(self, mock_cls):
         mock_client = MagicMock()
         get_resp = MagicMock()
@@ -375,7 +375,7 @@ class TestPrComment:
         body = mock_client.patch.call_args[1]["json"]["body"]
         assert "no breaking changes" in body.lower() or "✅" in body
 
-    @patch("drift_guard_agent.nodes.pr_comment.httpx.Client")
+    @patch("drift_agent.nodes.pr_comment.httpx.Client")
     def test_no_existing_comment_and_no_body_stays_silent(self, mock_cls):
         mock_client = MagicMock()
         get_resp = MagicMock()

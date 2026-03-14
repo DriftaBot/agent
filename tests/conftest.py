@@ -1,10 +1,10 @@
-"""Shared fixtures for drift-guard-agent tests."""
+"""Shared fixtures for drift-agent tests."""
 
 from __future__ import annotations
 
 import pytest
 
-from drift_guard_agent.state import Change, ConsumerRepo, DiffResult, Hit, initial_state
+from drift_agent.state import Change, ConsumerRepo, DiffResult, Hit, initial_state
 
 
 @pytest.fixture

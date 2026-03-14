@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-from drift_guard_agent.state import Change, DiffResult, DriftState
+from drift_agent.state import Change, DiffResult, DriftState
 
 
 def ingest(state: DriftState) -> dict:

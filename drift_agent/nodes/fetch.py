@@ -7,9 +7,9 @@ from pathlib import Path
 
 import git
 
-from drift_guard_agent.state import ConsumerRepo, DriftState
+from drift_agent.state import ConsumerRepo, DriftState
 
-_WORKDIR = Path(tempfile.gettempdir()) / "drift-guard-agent-clones"
+_WORKDIR = Path(tempfile.gettempdir()) / "drift-agent-clones"
 
 
 def fetch_consumers(state: DriftState) -> dict:

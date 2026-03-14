@@ -1,4 +1,4 @@
-"""CLI entry point for drift-guard-agent."""
+"""CLI entry point for drift-agent."""
 
 from __future__ import annotations
 
@@ -8,14 +8,14 @@ import uuid
 
 import click
 
-from drift_guard_agent.graph import build_graph
-from drift_guard_agent.nodes.ingest import parse_diff_json
-from drift_guard_agent.state import initial_state
+from drift_agent.graph import build_graph
+from drift_agent.nodes.ingest import parse_diff_json
+from drift_agent.state import initial_state
 
 
 @click.command()
 @click.option("--diff", "diff_path", default="-", show_default=True,
-              help="Path to drift-guard JSON diff file, or '-' to read from stdin.")
+              help="Path to drift-agent JSON diff file, or '-' to read from stdin.")
 @click.option("--org", envvar="GITHUB_ORG",
               default=lambda: os.environ.get("GITHUB_REPOSITORY_OWNER", ""),
               help="GitHub org to search for consumer repos. Defaults to GITHUB_REPOSITORY_OWNER.")
@@ -46,7 +46,7 @@ def main(
 ):
     """Scan consumer repos for impact when a provider PR has breaking API changes.
 
-    Triggered by drift-guard detecting breaking changes. Searches the org for
+    Triggered by drift-agent detecting breaking changes. Searches the org for
     repos referencing the broken endpoints, scans them, and opens GitHub Issues
     in any that are affected.
     """
@@ -70,9 +70,9 @@ def main(
 
     repos_list = [r.strip() for r in consumer_repos.replace(",", "\n").splitlines() if r.strip()]
     if repos_list:
-        click.echo(f"[drift-guard-agent] {len(breaking)} breaking change(s) detected. Scanning {len(repos_list)} explicit consumer repo(s)...")
+        click.echo(f"[drift-agent] {len(breaking)} breaking change(s) detected. Scanning {len(repos_list)} explicit consumer repo(s)...")
     else:
-        click.echo(f"[drift-guard-agent] {len(breaking)} breaking change(s) detected. Scanning org '{org}' for impacted consumers...")
+        click.echo(f"[drift-agent] {len(breaking)} breaking change(s) detected. Scanning org '{org}' for impacted consumers...")
 
     # Fall back to GITHUB_TOKEN for consumer operations if no dedicated PAT
     if not token:
