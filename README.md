@@ -1,6 +1,6 @@
 # api-drift-agent
 
-<a href="https://driftagent.github.io/api-drift-agent/" target="_blank"><img src="https://img.shields.io/badge/docs-api--drift--agent-6366f1?logo=gitbook&logoColor=white" alt="Documentation"></a>
+<a href="https://driftagent.github.io/api-drift-agent/guide" target="_blank"><img src="https://img.shields.io/badge/docs-api--drift--agent-6366f1?logo=gitbook&logoColor=white" alt="Documentation"></a>
 
 LangGraph-powered agent that detects breaking API changes in provider PRs and automatically opens GitHub Issues in affected consumer repos — zero config on consumer side.
 
