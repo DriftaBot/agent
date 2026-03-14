@@ -4,13 +4,6 @@
 
 LangGraph-powered agent that detects breaking API changes in provider PRs and automatically opens GitHub Issues in affected consumer repos — zero config on consumer side.
 
-## CLI
-
-```bash
-brew tap DriftaBot/cli
-brew install driftabot
-```
-
 ## Usage
 
 Add to your provider repo's workflow:
@@ -35,11 +28,14 @@ jobs:
       - uses: DriftaBot/agent@v2
         with:
           org-read-token: ${{ secrets.ORG_READ_TOKEN }}
+          consumer-repos: |
+            your-org/service-a
+            your-org/service-b
 ```
 
 ## How it works
 
-Powered by <a href="https://driftabot.github.io/engine/" target="_blank">DriftaBot Engine</a>.
+Powered by <a href="https://driftabot.github.io/engine/" target="_blank">DriftaBot</a>.
 
 1. Downloads the latest `api-drift-engine` binary
 2. Compares the OpenAPI schema between base and head branch
