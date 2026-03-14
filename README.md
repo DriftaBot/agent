@@ -32,7 +32,7 @@ jobs:
 
 ## How it works
 
-Powered by [drift-guard-engine](https://pgomes13.github.io/drift-guard-engine/).
+Powered by <a href="https://pgomes13.github.io/drift-guard-engine/" target="_blank">drift-guard-engine</a>.
 
 1. Downloads the latest `drift-guard-engine` binary
 2. Compares the OpenAPI schema between base and head branch

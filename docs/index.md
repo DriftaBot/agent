@@ -11,9 +11,11 @@ hero:
     - theme: alt
       text: View on GitHub
       link: https://github.com/DriftAgent/api-drift-agent
+      target: _blank
     - theme: alt
       text: GitHub Marketplace
       link: https://github.com/marketplace/actions/api-drift-agent
+      target: _blank
 
 features:
   - title: Auto-detect schemas
