@@ -107,6 +107,7 @@ GENEOF
 DRIFT_OUTPUT="$OUTPUT" npx ts-node \
   --project tsconfig.json \
   --transpile-only \
+  -r tsconfig-paths/register \
   ./.drift-nestjs-gen.ts
 
 EXIT_CODE=$?
