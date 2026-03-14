@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["ruff"]
+dev = ["ruff", "pytest>=8.0", "pytest-httpx>=0.30"]
 
 [project.scripts]
 drift-guard-agent = "drift_guard_agent.cli:main"

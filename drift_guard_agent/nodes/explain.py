@@ -51,12 +51,16 @@ For each breaking change that has at least one matching hit, write a concise 1-2
 Respond as a JSON array of strings, one per affected breaking change (same order, omit changes with no hits):
 ["explanation 1", "explanation 2"]"""
 
-        response = client.messages.create(
-            model=model,
-            max_tokens=1024,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
+        try:
+            response = client.messages.create(
+                model=model,
+                max_tokens=1024,
+                thinking={"type": "adaptive"},
+                messages=[{"role": "user", "content": prompt}],
+            )
+        except Exception as e:
+            print(f"::warning::drift-guard-agent: explain step skipped for {repo} — {e}")
+            continue
 
         text = next((b.text for b in response.content if b.type == "text"), "[]").strip()
         if text.startswith("```"):
