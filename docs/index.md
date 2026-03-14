@@ -13,11 +13,11 @@ hero:
       link: /guide#quick-start
     - theme: alt
       text: View on GitHub
-      link: https://github.com/DriftaBot/api-driftabot
+      link: https://github.com/DriftaBot/agent
       target: _blank
     - theme: alt
       text: GitHub Marketplace
-      link: https://github.com/marketplace/actions/api-driftabot
+      link: https://github.com/marketplace/actions/driftabot-agent
       target: _blank
 
 features:

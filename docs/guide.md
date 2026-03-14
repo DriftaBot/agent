@@ -1,6 +1,6 @@
 # Guide
 
-`api-driftabot` detects breaking API changes in provider PRs, scans a configured list of consumer repos, and automatically opens GitHub Issues in any that are affected — zero setup required on the consumer side.
+`@driftabot/agent` detects breaking API changes in provider PRs, scans a configured list of consumer repos, and automatically opens GitHub Issues in any that are affected — zero setup required on the consumer side.
 
 ## Quick start
 
@@ -41,7 +41,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: DriftaBot/api-driftabot@v1
+      - uses: DriftaBot/agent@v1
         with:
           org-read-token: ${{ secrets.ORG_READ_TOKEN }}
           consumer-repos: |

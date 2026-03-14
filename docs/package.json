@@ -1,5 +1,5 @@
 {
-  "name": "api-driftabot-docs",
+  "name": "@driftabot/agent-docs",
   "private": true,
   "type": "module",
   "scripts": {

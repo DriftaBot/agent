@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "api-driftabot"
+name = "driftabot-agent"
 version = "0.1.0"
 description = "LangGraph agent that detects breaking API changes and opens GitHub Issues in affected consumer repos."
 readme = "README.md"
@@ -30,9 +30,9 @@ dev = ["ruff", "pytest>=8.0", "pytest-httpx>=0.30"]
 drift-agent = "drift_agent.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/DriftaBot/api-driftabot"
-Repository = "https://github.com/DriftaBot/api-driftabot"
-Issues = "https://github.com/DriftaBot/api-driftabot/issues"
+Homepage = "https://github.com/DriftaBot/agent"
+Repository = "https://github.com/DriftaBot/agent"
+Issues = "https://github.com/DriftaBot/agent/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["drift_agent"]

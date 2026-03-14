@@ -1,6 +1,6 @@
-# api-driftabot
+# @driftabot/agent
 
-<a href="https://driftabot.github.io/api-driftabot/guide" target="_blank"><img src="https://img.shields.io/badge/docs-api--driftabot-6366f1?logo=gitbook&logoColor=white" alt="Documentation"></a>
+<a href="https://driftabot.github.io/agent/guide" target="_blank"><img src="https://img.shields.io/badge/docs-@driftabot/agent-6366f1?logo=gitbook&logoColor=white" alt="Documentation"></a>
 
 LangGraph-powered agent that detects breaking API changes in provider PRs and automatically opens GitHub Issues in affected consumer repos — zero config on consumer side.
 
@@ -25,7 +25,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: DriftaBot/api-driftabot@v1
+      - uses: DriftaBot/agent@v1
         with:
           org-read-token: ${{ secrets.ORG_READ_TOKEN }}
 ```

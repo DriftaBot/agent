@@ -10,7 +10,7 @@ from drift_agent.state import DriftState
 
 _GITHUB_API = "https://api.github.com"
 _COMMENT_MARKER = "<!-- drift-guard-pr-comment -->"
-_MARKETPLACE_URL = "https://github.com/marketplace/actions/api-driftabot"
+_MARKETPLACE_URL = "https://github.com/marketplace/actions/driftabot-agent"
 _AGENT_LINK = '<a href="{url}" target="_blank">DriftaBot</a>'.format(url=_MARKETPLACE_URL)
 
 
@@ -125,7 +125,7 @@ def _build_not_configured_comment(breaking: list) -> str:
         "Add the `consumer-repos` input to enable scanning:",
         "",
         "```yaml",
-        "- uses: DriftaBot/api-driftabot@v1",
+        "- uses: DriftaBot/agent@v1",
         "  with:",
         "    org-read-token: ${{ secrets.ORG_READ_TOKEN }}",
         "    consumer-repos: |",
