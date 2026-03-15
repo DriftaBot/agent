@@ -6,15 +6,8 @@ hero:
   tagline: Detect breaking API changes in provider PRs. Automatically open GitHub Issues in affected consumer repos.
   actions:
     - theme: brand
-      text: Get Started
-      link: /guide
-    - theme: alt
-      text: Take Tour
+      text: Quickstart
       link: /guide#quick-start
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/DriftaBot/agent
-      target: _blank
     - theme: alt
       text: GitHub Marketplace
       link: https://github.com/marketplace/actions/driftabot-agent
